@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard Sakura</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <h2>🌸 Dashboard</h2>
+    <nav>
+        <a href="#">Accueil</a>
+        <a href="#">Statistiques</a>
+        <a href="#">Utilisateurs</a>
+        <a href="#">Paramètres</a>
+    </nav>
+</aside>
+
+<main class="content">
+
+    <header>
+        <h1>Dashboard – Activité Utilisateurs</h1>
+        <div class="filters">
+            <select id="filtrePage">
+                <option value="toutes">Toutes les pages</option>
+                <option value="Accueil">Accueil</option>
+                <option value="Articles">Articles</option>
+                <option value="Contact">Contact</option>
+                <option value="Profil">Profil</option>
+            </select>
+
+            <select id="filtreJour">
+                <option value="7">7 jours</option>
+                <option value="30">30 jours</option>
+                <option value="90">90 jours</option>
+            </select>
+        </div>
+    </header>
+</main>
+<section class="cards-grid">
+        <div class="card sakura-card">
+            <h3>Visiteurs</h3>
+            <p id="visiteurs">0</p>
+        </div>
+        <div class="card sakura-card">
+            <h3>Temps moyen (s)</h3>
+            <p id="temps">0</p>
+        </div>
+        <div class="card sakura-card">
+            <h3>Interactions</h3>
+            <p id="interactions">0</p>
+        </div>
+        <div class="card sakura-card">
+            <h3>Taux de rebond (%)</h3>
+            <p id="rebond">0</p>
+        </div>
+    </section>
+
+    <section class="charts-grid">
+        <div class="chartBox">
+            <h2>Pages consultées</h2>
+            <canvas id="chartBar"></canvas>
+        </div>
+    </section>
+
+</main>
+
+<script>
+const data = {
+    visiteurs: 1530,
+    interactions: 860,
+    tempsMoyen: 87,
+    tauxRebond: 34,
+
+    pages: [
+        { nom: "Accueil", vues: 1200 },
+        { nom: "Articles", vues: 980 },
+        { nom: "Contact", vues: 430 },
+        { nom: "Profil", vues: 300 }
+    ],
+
+    visites30j: [50, 60, 80, 75, 90, 110, 130, 125, 150, 160, 170, 210],
+    interactionsType: [40, 30, 20, 10] 
+};
+
+document.getElementById("visiteurs").textContent = data.visiteurs;
+document.getElementById("temps").textContent = data.tempsMoyen;
+document.getElementById("interactions").textContent = data.interactions;
+document.getElementById("rebond").textContent = data.tauxRebond;
+
+const c1 = document.getElementById("chartBar").getContext("2d");
+const c2 = document.getElementById("chartLine").getContext("2d");
+const c3 = document.getElementById("chartPie").getContext("2d");
+
+</script>
+</body>
+</html>

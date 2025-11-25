@@ -5,7 +5,6 @@
     <title>Dashboard Sakura</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -41,8 +40,8 @@
             </select>
         </div>
     </header>
-</main>
-<section class="cards-grid">
+
+    <section class="cards-grid">
         <div class="card sakura-card">
             <h3>Visiteurs</h3>
             <p id="visiteurs">0</p>
@@ -66,6 +65,10 @@
             <h2>Pages consultées</h2>
             <canvas id="chartBar"></canvas>
         </div>
+        <div class="chartBox">
+            <h2>Visites sur 30 jours</h2>
+            <canvas id="chartLine"></canvas>
+        </div>
     </section>
 
 </main>
@@ -84,19 +87,55 @@ const data = {
         { nom: "Profil", vues: 300 }
     ],
 
-    visites30j: [50, 60, 80, 75, 90, 110, 130, 125, 150, 160, 170, 210],
-    interactionsType: [40, 30, 20, 10] 
+    visites30j: [50, 60, 80, 75, 90, 110, 130, 125, 150, 160, 170, 210]
 };
 
+// Remplissage des valeurs
 document.getElementById("visiteurs").textContent = data.visiteurs;
 document.getElementById("temps").textContent = data.tempsMoyen;
 document.getElementById("interactions").textContent = data.interactions;
 document.getElementById("rebond").textContent = data.tauxRebond;
 
+// Sélection des canvas
 const c1 = document.getElementById("chartBar").getContext("2d");
 const c2 = document.getElementById("chartLine").getContext("2d");
-const c3 = document.getElementById("chartPie").getContext("2d");
 
+// Graphique Bar
+new Chart(c1, {
+    type: "bar",
+    data: {
+        labels: data.pages.map(p => p.nom),
+        datasets: [{
+            label: "Vues",
+            data: data.pages.map(p => p.vues),
+            backgroundColor: ["#7fb9d4", "#395f77", "#f4d29c", "#ffe8b5"],
+            borderColor: "#5a4634",
+            borderWidth: 2,
+        }]
+    },
+    options: {
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { display: false } }
+    }
+});
+
+// Graphique Line
+new Chart(c2, {
+    type: "line",
+    data: {
+        labels: ["J1","J3","J5","J7","J9","J11","J13","J15","J17","J19","J21","J23"],
+        datasets: [{
+            label: "Visites",
+            data: data.visites30j,
+            borderColor: "#ff9bbd",
+            backgroundColor: "rgba(255, 182, 193, 0.3)",
+            tension: 0.4,
+            borderWidth: 3
+        }]
+    },
+    options: { plugins: { legend: { display: false } } }
+});
 </script>
+
 </body>
 </html>

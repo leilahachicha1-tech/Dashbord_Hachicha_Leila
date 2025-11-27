@@ -5,6 +5,7 @@
     <title>Dashboard Sakura</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -61,14 +62,22 @@
     </section>
 
     <section class="charts-grid">
+
         <div class="chartBox">
             <h2>Pages consultées</h2>
             <canvas id="chartBar"></canvas>
         </div>
+
         <div class="chartBox">
             <h2>Visites sur 30 jours</h2>
             <canvas id="chartLine"></canvas>
         </div>
+
+        <div class="chartBox">
+            <h2>Répartition des interactions</h2>
+            <canvas id="chartPie"></canvas>
+        </div>
+
     </section>
 
 </main>
@@ -87,20 +96,19 @@ const data = {
         { nom: "Profil", vues: 300 }
     ],
 
-    visites30j: [50, 60, 80, 75, 90, 110, 130, 125, 150, 160, 170, 210]
+    visites30j: [50, 60, 80, 75, 90, 110, 130, 125, 150, 160, 170, 210],
+    interactionsType: [40, 30, 20, 10] 
 };
 
-// Remplissage des valeurs
 document.getElementById("visiteurs").textContent = data.visiteurs;
 document.getElementById("temps").textContent = data.tempsMoyen;
 document.getElementById("interactions").textContent = data.interactions;
 document.getElementById("rebond").textContent = data.tauxRebond;
 
-// Sélection des canvas
 const c1 = document.getElementById("chartBar").getContext("2d");
 const c2 = document.getElementById("chartLine").getContext("2d");
+const c3 = document.getElementById("chartPie").getContext("2d");
 
-// Graphique Bar
 new Chart(c1, {
     type: "bar",
     data: {
@@ -119,7 +127,6 @@ new Chart(c1, {
     }
 });
 
-// Graphique Line
 new Chart(c2, {
     type: "line",
     data: {
@@ -134,6 +141,18 @@ new Chart(c2, {
         }]
     },
     options: { plugins: { legend: { display: false } } }
+});
+
+new Chart(c3, {
+    type: "doughnut",
+    data: {
+        labels: ["Clics", "Scroll", "Formulaires", "Autres"],
+        datasets: [{
+            data: data.interactionsType,
+            backgroundColor: ["#ff9bbd", "#f4d29c", "#7fb9d4", "#395f77"],
+            borderColor: "#ffffff",
+        }]
+    }
 });
 </script>
 
